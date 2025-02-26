@@ -2,7 +2,10 @@ package servlets;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,9 +13,11 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.Set;
 
+import dao.Employee;
 import jakarta.servlet.ServletContext;
 
 public class DeptDAOImpl implements DeptDAO{
+	
 	
 	
 	public DeptDAOImpl(ServletContext sc,Properties p) {
@@ -48,42 +53,93 @@ public class DeptDAOImpl implements DeptDAO{
 		
 	}
 
-	private Map<Integer,Dept> depts;
+	//private Map<Integer,Dept> depts;
 	
-	public DeptDAOImpl() {
-		depts = new HashMap<Integer,Dept>();
-	}
+	private List<Dept> depts;
 	
-	public void save(Dept dept) {
-		depts.put(dept.getId(),dept);
+//	public DeptDAOImpl() {
+//		depts = new HashMap<Integer,Dept>();
+//	}
+//	
+//	public void save(Dept dept) {
+//		depts.put(dept.getId(),dept);
+//	}
+//	public void update(Dept dept) {
+//		depts.put(dept.getId(), dept);
+//	}
+//	public Dept getDept(int id) {
+//		return depts.get(id);
+//	}
+//	public void delete (int id) {
+//		depts.remove(id);
+//	}
+//	public Set<Dept> getAll(){
+//		Set<Dept> all = new HashSet<Dept>();
+//		for (int id : depts.keySet()) {
+//			all.add(depts.get(id));	
+//		}
+//		return all;
+//	}
+	
+	private Dept populateDept(ResultSet rs) throws SQLException {
+
+		return Dept.builder().id(rs.getInt(1)).name(rs.getString(2)).location(rs.getString(3)).build();
 	}
-	public void update(Dept dept) {
-		depts.put(dept.getId(), dept);
-	}
-	public Dept getDept(int id) {
-		return depts.get(id);
-	}
-	public void delete (int id) {
-		depts.remove(id);
-	}
-	public Set<Dept> getAll(){
-		Set<Dept> all = new HashSet<Dept>();
-		for (int id : depts.keySet()) {
-			all.add(depts.get(id));	
+		
+		private void setValuesToPreparedStatement(Dept d, PreparedStatement ps) throws SQLException {
+			ps.setInt(1, d.getId());
+			ps.setString(2, d.getName());
+			ps.setString(3, d.getLocation());
 		}
-		return all;
+	
+	@Override
+	public List<Dept> getAll() {
+		List<Dept> dep = new ArrayList<Dept>();
+		
+		try(Connection conn = getConnection()) {
+			System.out.println("Database Connected");
+			PreparedStatement ps = conn.prepareStatement
+					("SELECT DEPTID,DEPTNAME,DEPTLOCATION FROM DEPARTMENT");
+			ResultSet rs= ps.executeQuery();
+			while (rs.next()) {
+				dep.add(populateDept(rs));
+			}
+			
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
+		return dep;
+		
 	}
+	
 	
 	@Override
 	public Dept first() {
-		return depts.get(depts.keySet().stream().min((a,b)-> (a-b)).get());
+	    if (depts != null && !depts.isEmpty()) {
+	        return depts.get(0); // Get the first element
+	    }
+	    return null; // Return null if the list is empty
 	}
-	
-	
+
 	@Override
 	public Dept last() {
-		return depts.get(depts.keySet().stream().max((a,b)-> (a-b)).get());
+	    if (depts != null && !depts.isEmpty()) {
+	        return depts.get(depts.size() - 1); // Get the last element
+	    }
+	    return null; // Return null if the list is empty
 	}
+
+	
+//	@Override
+//	public Dept first() {
+//		return depts.get(depts.keySet().stream().min((a,b)-> (a-b)).get());
+//	}
+//	
+//	
+//	@Override
+//	public Dept last() {
+//		return depts.get(depts.keySet().stream().max((a,b)-> (a-b)).get());
+//	}
 	
 	@Override
 	public Dept next(int id) {
@@ -96,6 +152,35 @@ public class DeptDAOImpl implements DeptDAO{
 		if(id==1) return getDept(1);
 		return depts.get(id-1) ;
 	}
+	@Override
+	public void save(Dept dept) {
+		
+	}
+	@Override
+	public void update(Dept dept) {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public Dept getDept(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	public void delete(int id) {
+		// TODO Auto-generated method stub
+		
+	}
+//	@Override
+//	public Set<Dept> getAll() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
+//	@Override
+//	public List<Dept> getAll() {
+//		// TODO Auto-generated method stub
+//		return null;
+//	}
 	
 
 }

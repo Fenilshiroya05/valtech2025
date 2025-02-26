@@ -1,6 +1,9 @@
 package servlets;
 
+import java.util.List;
 import java.util.Set;
+
+import dao.Employee;
 
 public interface DeptDAO {
 	
@@ -17,7 +20,9 @@ public interface DeptDAO {
 	
 	void delete(int id);
 	
-	Set<Dept> getAll();
+	//Set<Dept> getAll();
+	
+	List<Dept> getAll();
 	
 	
 }
