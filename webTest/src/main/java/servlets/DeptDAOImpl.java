@@ -116,7 +116,7 @@ public class DeptDAOImpl implements DeptDAO{
 	@Override
 	public Dept first() {
 	    if (depts != null && !depts.isEmpty()) {
-	        return depts.get(0); // Get the first element
+	        return this.getDept(0); // Get the first element
 	    }
 	    return null; // Return null if the list is empty
 	}
@@ -163,7 +163,21 @@ public class DeptDAOImpl implements DeptDAO{
 	}
 	@Override
 	public Dept getDept(int id) {
-		// TODO Auto-generated method stub
+		try(Connection conn = getConnection()) {
+			System.out.println("Database Connected");
+			PreparedStatement ps = conn.prepareStatement
+					("SELECT DEPTID,DEPTNAME,DEPTLOCATION FROM DEPARTMENT WHERE DEPTID=?");
+			ps.setInt(1, id);
+			ResultSet rs= ps.executeQuery();
+			if (rs.next()) {
+				Dept dep = populateDept(rs);
+				return dep;
+			}else {
+				new  RuntimeException("No id is there"+ id);
+			}
+		} catch (Exception e) {
+			throw new RuntimeException(e);
+		}
 		return null;
 	}
 	@Override
@@ -176,11 +190,7 @@ public class DeptDAOImpl implements DeptDAO{
 //		// TODO Auto-generated method stub
 //		return null;
 //	}
-//	@Override
-//	public List<Dept> getAll() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+
 	
 
 }

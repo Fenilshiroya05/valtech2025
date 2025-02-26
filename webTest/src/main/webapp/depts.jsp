@@ -105,6 +105,7 @@ Current dept = ${current}
     <meta charset="UTF-8">
 </head>
 <body>
+<form action="depts" method="post">
     <!-- Display the department details for the current department -->
     <h3>Department Info:</h3>
     <table border="1">
@@ -113,20 +114,22 @@ Current dept = ${current}
             <th>Name</th>
             <th>Location</th>
         </tr>
+        
         <tr>
-            <td>${dept.id}</td>
-            <td>${dept.name}</td>
-            <td>${dept.location}</td>
+            <td>${depts.id}</td>
+            <td>${depts.name}</td>
+            <td>${depts.location}</td>
         </tr>
-    </table>
-
+    
+ </table>
     <!-- Form for navigating departments -->
-    <form action="depts" method="post">
+    
         <input type="submit" name="operation" value="First">
         <input type="submit" name="operation" value="Previous">
         <input type="submit" name="operation" value="Next">
         <input type="submit" name="operation" value="Last">
-    </form>
+      
+</form>
 
     <hr>
 

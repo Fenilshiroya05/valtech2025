@@ -24,7 +24,7 @@ public class Item {
 	@ManyToMany(targetEntity = Order.class)
 	private List<Order> orders;
 	
-	@OneToOne
+	@OneToOne(targetEntity = LiveItem.class)
 	private List<LiveItem> liveitems;
 	
 	public Item() {
