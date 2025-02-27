@@ -69,7 +69,6 @@ class EmployeeTest {
 		System.out.println("Total Sum of salary by Level and Gender = "+emp4);
 		
 		Map<Gender,List<Employee>> emp5= Employee.getEmployeeByGender();
-		System.out.println("All Employee List By Gender  = " + emp5);
-		
+		System.out.println("All Employee List By Gender  = " + emp5);	
 	}
 }

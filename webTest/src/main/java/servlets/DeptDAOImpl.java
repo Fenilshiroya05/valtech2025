@@ -263,7 +263,7 @@ public class DeptDAOImpl implements DeptDAO{
 	    
 	    try (Connection conn = getConnection()) {
 	        PreparedStatement ps = conn.prepareStatement(
-	                "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE DEPT_ID = ?"
+	                "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE DEPTID = ?"
 	        );
 	        ps.setInt(1, id);
 	        
