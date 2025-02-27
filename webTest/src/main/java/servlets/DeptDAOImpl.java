@@ -14,6 +14,7 @@ import java.util.Properties;
 import java.util.Set;
 
 import dao.Employee;
+import dao.Employee.Gender;
 import jakarta.servlet.ServletContext;
 
 public class DeptDAOImpl implements DeptDAO{
@@ -80,6 +81,17 @@ public class DeptDAOImpl implements DeptDAO{
 //		}
 //		return all;
 //	}
+//	@Override
+//	public Dept first() {
+//		return depts.get(depts.keySet().stream().min((a,b)-> (a-b)).get());
+//	}
+//	
+//	
+//	@Override
+//	public Dept last() {
+//		return depts.get(depts.keySet().stream().max((a,b)-> (a-b)).get());
+//	}
+	
 	
 	private Dept populateDept(ResultSet rs) throws SQLException {
 
@@ -115,52 +127,97 @@ public class DeptDAOImpl implements DeptDAO{
 	
 	@Override
 	public Dept first() {
-	    if (depts != null && !depts.isEmpty()) {
-	        return this.getDept(0); // Get the first element
-	    }
-	    return null; // Return null if the list is empty
+	    
+	    try (Connection conn = getConnection()) {
+			PreparedStatement ps = conn.prepareStatement("SELECT DEPTID,DEPTNAME,DEPTLOCATION FROM DEPARTMENT ORDER BY DEPTID ASC LIMIT 1");
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return populateDept(rs);
+			}
+			throw new RuntimeException("No departments found");
+		} catch (SQLException e) {
+			throw new RuntimeException("Error retrieving first department: " + e.getMessage(), e);
+		}
 	}
 
 	@Override
 	public Dept last() {
-	    if (depts != null && !depts.isEmpty()) {
-	        return depts.get(depts.size() - 1); // Get the last element
-	    }
-	    return null; // Return null if the list is empty
+		try (Connection conn = getConnection()) {
+			PreparedStatement ps = conn.prepareStatement("SELECT DEPTID,DEPTNAME,DEPTLOCATION FROM DEPARTMENT ORDER BY DEPTID DESC LIMIT 1");
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return populateDept(rs);
+			}
+			throw new RuntimeException("No departments found");
+		} catch (SQLException e) {
+			throw new RuntimeException("Error retrieving first department: " + e.getMessage(), e);
+		}
 	}
 
-	
-//	@Override
-//	public Dept first() {
-//		return depts.get(depts.keySet().stream().min((a,b)-> (a-b)).get());
-//	}
-//	
-//	
-//	@Override
-//	public Dept last() {
-//		return depts.get(depts.keySet().stream().max((a,b)-> (a-b)).get());
-//	}
-	
 	@Override
 	public Dept next(int id) {
-		if(id==depts.size())  return depts.get(depts.size());
-		return depts.get(id+1);
+		try (Connection conn = getConnection()) {
+			PreparedStatement ps = conn.prepareStatement("SELECT DEPTID,DEPTNAME,DEPTLOCATION FROM DEPARTMENT WHERE DEPTID > ? ORDER BY DEPTID ASC LIMIT 1");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return populateDept(rs);
+			}else {
+				return getDept(id);
+			}
+		
+		} catch (SQLException e) {
+			throw new RuntimeException("Error retrieving next department: " + e.getMessage(), e);
+		}
 	}
 	
 	@Override
 	public Dept previous(int id) {
-		if(id==1) return getDept(1);
-		return depts.get(id-1) ;
+		try (Connection conn = getConnection()) {
+			PreparedStatement ps = conn.prepareStatement("SELECT DEPTID,DEPTNAME,DEPTLOCATION FROM DEPARTMENT WHERE DEPTID < ? ORDER BY DEPTID DESC LIMIT 1");
+			ps.setInt(1, id);
+			ResultSet rs = ps.executeQuery();
+			if (rs.next()) {
+				return populateDept(rs);
+			}
+			else {
+				return getDept(id);
+			}
+		} catch (SQLException e) {
+			throw new RuntimeException("Error retrieving previous department: " + e.getMessage(), e);
+		}
+		
 	}
+	
 	@Override
 	public void save(Dept dept) {
-		
+		try (Connection conn = getConnection()) {
+			 
+			//creating the dynamic statement
+			PreparedStatement ps = conn.prepareStatement(
+					"INSERT INTO DEPARTMENT (DEPTID,DEPTNAME,DEPTLOCATION) VALUES (?, ?, ?)");
+			setValuesToPreparedStatement(dept, ps);
+			// executing the statement
+			int rowsAffected = ps.executeUpdate();
+			System.out.println("Rows inserted = " + rowsAffected);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error inserting department: " + e.getMessage(), e);
+		}
 	}
+	
 	@Override
 	public void update(Dept dept) {
-		// TODO Auto-generated method stub
-		
+		try (Connection conn = getConnection()) {
+			PreparedStatement ps = conn.prepareStatement(
+					"UPDATE DEPARTMENT SET DEPTNAME = ?, DEPTLOCATION = ? WHERE DEPTID = ?");
+			setValuesToPreparedStatement(dept, ps);
+			int rowsAffected = ps.executeUpdate();
+			System.out.println("Rows Updated = " + rowsAffected);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error updating department: " + e.getMessage(), e);
+		}
 	}
+	
 	@Override
 	public Dept getDept(int id) {
 		try(Connection conn = getConnection()) {
@@ -180,16 +237,47 @@ public class DeptDAOImpl implements DeptDAO{
 		}
 		return null;
 	}
+	
 	@Override
 	public void delete(int id) {
-		// TODO Auto-generated method stub
+		try (Connection conn = getConnection()) {
+			PreparedStatement ps = conn.prepareStatement("DELETE FROM DEPARTMENT WHERE DEPTID = ?");
+			ps.setInt(1, id);
+			int rowsAffected = ps.executeUpdate();
+			System.out.println("Rows Deleted = " + rowsAffected);
+		} catch (SQLException e) {
+			throw new RuntimeException("Error deleting department: " + e.getMessage(), e);
+		}
+	}
+	
+	private Employee populateEmployee(ResultSet rs) throws SQLException {
+
+		return Employee.builder().id(rs.getLong(1)).name(rs.getString(2)).age(rs.getInt(3)).gender(rs.getString(4))
+				.salary(rs.getFloat(5)).experience(rs.getInt(6)).level(rs.getInt(7)).dept_id(8).build();
 		
 	}
-//	@Override
-//	public Set<Dept> getAll() {
-//		// TODO Auto-generated method stub
-//		return null;
-//	}
+	
+	@Override
+	public List<Employee> getEmployeesByDeptId(int id) {
+	    List<Employee> employees = new ArrayList<>();
+	    
+	    try (Connection conn = getConnection()) {
+	        PreparedStatement ps = conn.prepareStatement(
+	                "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE DEPT_ID = ?"
+	        );
+	        ps.setInt(1, id);
+	        
+	        ResultSet rs = ps.executeQuery();
+	        
+	        while (rs.next()) {
+	        	employees.add(populateEmployee(rs));
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	    }
+	    return employees;
+	}
+ 
 
 	
 

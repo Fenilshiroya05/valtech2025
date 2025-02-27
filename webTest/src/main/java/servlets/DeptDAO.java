@@ -23,6 +23,8 @@ public interface DeptDAO {
 	//Set<Dept> getAll();
 	
 	List<Dept> getAll();
+	List<Employee> getEmployeesByDeptId(int dept_id);
+	
 	
 	
 }

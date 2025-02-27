@@ -17,7 +17,7 @@ public class Employee implements Comparable<Employee>{
 	private int experiance;
 	private Gender gender;
 	public static List<Employee> allEmployee = new ArrayList<Employee>();
-	private static Map<Gender,List<Employee>> getEmployeeMap = new HashMap<Gender,List<Employee>>();
+	//private static Map<Gender,List<Employee>> getEmployeeMap = new HashMap<Gender,List<Employee>>();
 	
 	public enum Gender{
 		MALE,
@@ -40,59 +40,54 @@ public class Employee implements Comparable<Employee>{
 	public Employee() {}
 
 	
-	  public static String getEmployeebyLevels(int level){ 
+	  public static double getEmployeebyLevelsTotalSalaries(int level){ 
 		   List<Employee> empByLevels= allEmployee.stream().filter(e-> e.level==level).collect(Collectors.toList());
 		   System.out.println("List By Levels = "+ empByLevels);
 		   double emp1= allEmployee.stream().filter(e-> e.level==level).mapToDouble(Employee::getSalary).sum();
 		   if(emp1>0) {
-				  return "Total Sum of salary by Level  = "+ emp1;
+				  return  emp1;
 			  }
 			  else 
 			  {
-				  return level+" not available in DATA";
+				  return 0;
 			  }
 	   }
 	   
-	   public static double getEmployeebyGender(Gender gender) {
+	   public static double getEmployeebyGenderTotalSalaries(Gender gender) {
 		   List<Employee> empByGender= allEmployee.stream().filter(e-> e.gender.equals(gender)).collect(Collectors.toList());
-		   System.out.println("List By Levels = "+ empByGender);
+		   System.out.println("List By Gender = "+ empByGender);
 		   return allEmployee.stream().filter(e-> e.gender.equals(gender)).mapToDouble(Employee::getSalary).sum();
 	   }
 	   
-	  public static String getEmployeeByName(String name) {
+	  public static double getEmployeeByNameTotalSalaries(String name) {
 		  List<Employee> empByName= allEmployee.stream().filter(e-> e.name.equals(name)).collect(Collectors.toList());
-		  System.out.println("List By Levels = "+ empByName);
+		  System.out.println("List By Name = "+ empByName);
 		  double emp1=allEmployee.stream().filter(e-> e.name.equals(name)).mapToDouble(Employee::getSalary).sum();
 		  if(emp1>0) {
-			  return "Total Sum of salary = "+ emp1;
+			  return  emp1;
 		  }
 		  else 
 		  {
-			  return name+" not available in DATA";
+			  return 0;
 		  }
 		  
 	   }
-	   public static String getEmployeeByLevelAndGender(int level,Gender gender) {
+	   public static double getEmployeeByLevelAndGenderTotalSalaries(int level,Gender gender) {
 		   List<Employee> empByName= allEmployee.stream().filter(e-> e.gender.equals(gender) && e.level==level) .collect(Collectors.toList());
-		   System.out.println("List By Levels = "+ empByName);
+		   System.out.println("List By Level and Gender = "+ empByName);
 		   double emp1=allEmployee.stream().filter(e-> e.gender.equals(gender) && e.level==level).mapToDouble(Employee::getSalary).sum();
 		   if(emp1>0) {
-				  return "Total Sum of salary by Level and Gender = "+ emp1;
+				  return emp1;
 			  }
 			  else 
 			  {
-				  return "Not available in DATA";
+				  return 0;
 			  }
 	   }
-
 		
-		public static Map<Gender,List<Employee>> getEmployeeByGender() {
+	   public static Map<Gender,List<Employee>> getEmployeeByGender() {
 			
 			return allEmployee.stream().collect(Collectors.groupingBy(e->e.gender));
-//			getEmployeeMap.put(Gender.MALE, allEmployee.stream().filter(e->e.gender.equals(Gender.MALE)).collect(Collectors.toList()));
-//			getEmployeeMap.put(Gender.FEMALE, allEmployee.stream().filter(e->e.gender.equals(Gender.FEMALE)).collect(Collectors.toList()));
-//			getEmployeeMap.put(Gender.OTHER, allEmployee.stream().filter(e->e.gender.equals(Gender.OTHER)).collect(Collectors.toList()));
-//			return getEmployeeMap;
 		}
 
 		
@@ -190,17 +185,21 @@ public class Employee implements Comparable<Employee>{
 	
 	
 	@Override
-	public int compareTo(Employee o) {
+	public int compareTo(Employee emp) {
 
-		if(this.level!=o.level)
-			return level-o.level;
-		else if(this.experiance!=o.experiance)
-			return experiance-o.experiance;
-		int genderCom = this.gender.compareTo(o.gender);
+		if(this.level!=emp.level)
+			return level-emp.level;
+		else if(this.experiance!=emp.experiance)
+			return experiance-emp.experiance;
+	
+		//this.gender<emp.gender -ve  this.gender=emp.gender 0 this.gender>emp.gender +ve
+		
+		int genderCom = this.gender.compareTo(emp.gender);
+		//System.out.println(genderCom);
 		if(genderCom!=0){
 			return genderCom;
 		}else 
-			return (int) (salary-o.salary);
+			return (int) (salary-emp.salary);
 	}
 	
 	

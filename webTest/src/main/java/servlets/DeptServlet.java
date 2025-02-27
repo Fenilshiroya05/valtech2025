@@ -52,7 +52,8 @@ public class DeptServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		String operation = req.getParameter("operation");
 		HttpSession session = req.getSession();
-		Dept current = (Dept) session.getAttribute("depts");
+		//Dept current = (Dept) session.getAttribute("depts");
+		Dept current = (Dept) session.getAttribute("current");
 		//System.out.println(current);
 		if(current==null) {
 			current = deptDAO.first();
@@ -72,12 +73,37 @@ public class DeptServlet extends HttpServlet {
 				current = deptDAO.previous(current.getId());
 			}
 		}
-		session.setAttribute("depts", current);
-		//Expression in JSP can work with objects in session also...
+		session.setAttribute("current", current);
+		
+		session.setAttribute("emps", deptDAO.getEmployeesByDeptId(current.getId())); // Add the employee list to the request
+		
 		req.setAttribute("depts", current);
-		req.setAttribute("emps", dao.getAll()); // Add the employee list to the request
 
-		List<Dept> depts = deptDAO.getAll();
+		//List<Dept> depts = deptDAO.getAll();
+		
+		if("Cancel".equals(operation)) {
+			
+			req.setAttribute("emps", deptDAO.getAll());
+			req.getRequestDispatcher("depts.jsp").forward(req, resp);
+			return;
+			}
+ 
+		
+		Dept depts = Dept.builder().id(Integer.parseInt(req.getParameter("id"))).name(req.getParameter("name")).location(req.getParameter("location")).build();
+		
+		if("Save".equals(operation)) {
+			deptDAO.save(depts);
+			req.setAttribute("depts",deptDAO.getAll());
+			req.getRequestDispatcher("depts.jsp").forward(req, resp);
+			return;
+		}
+		if("Update".equals(operation)) {
+			deptDAO.update(depts);
+			req.setAttribute("depts",deptDAO.getAll());
+			req.getRequestDispatcher("depts.jsp").forward(req, resp);
+			return;
+		}
+		
 		
 //		req.setAttribute("depts", depts);
 		
@@ -96,12 +122,16 @@ public class DeptServlet extends HttpServlet {
 	@Override
 	protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
 		
-		List<Employee> emps = dao.getAll(); 
-		System.out.println(emps);// Fetch the employee list from DB or other source
-		String operation=req.getParameter("operation");
-		HttpSession session = req.getSession();
 		
-		List<Dept> dept = deptDAO.getAll();
+		req.setAttribute("dept", deptDAO.first());
+		//List<Employee> emps = dao.getAll(); 
+		//System.out.println(emps);// Fetch the employee list from DB or other source
+		String operation = req.getParameter("operation");
+		HttpSession session = req.getSession();
+		session.setAttribute("current", deptDAO.first());
+		Dept current=(Dept) session.getAttribute("current");
+		
+		//List<Dept> dept = deptDAO.getAll();
 		//System.out.println(dept);
 	   
 		if("sortByIdDep".equals(operation)) {
@@ -163,10 +193,10 @@ public class DeptServlet extends HttpServlet {
 			req.getRequestDispatcher("depts.jsp").forward(req, resp);
 			return;
 		}
-		req.setAttribute("emps", emps); // Add the employee list to the request
-	    req.setAttribute("depts", deptDAO.first());
+		session.setAttribute("emps", deptDAO.getEmployeesByDeptId(current.getId())); // Add the employee list to the request
+	    req.setAttribute("depts", deptDAO.getAll());
 	    
-	    session.setAttribute("current", deptDAO.getAll());
+	   // session.setAttribute("current", deptDAO.getAll());
 	    req.getRequestDispatcher("depts.jsp").forward(req, resp);
 	}
 

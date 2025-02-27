@@ -18,6 +18,7 @@ public class Employee implements Comparable<Employee>{
 	private int level;
 	private int experience;
 	private Gender gender;
+	private int dept_id;
 	public static List<Employee> allEmployee = new ArrayList<Employee>();
 	private static Map<Gender,List<Employee>> getEmployeeMap = new HashMap<Gender,List<Employee>>();
 	
@@ -27,7 +28,7 @@ public class Employee implements Comparable<Employee>{
 		OTHER;
 	}
 	// parameterized constructor
-	public Employee(long id, String name, int age, float salary, int level, int experiance, String gender) {
+	public Employee(long id, String name, int age, float salary, int level, int experiance, String gender,int dept_id) {
 		this.id = id;
 		this.name = name;
 		this.age = age;
@@ -35,6 +36,7 @@ public class Employee implements Comparable<Employee>{
 		this.level = level;
 		this.experience = experiance;
 		this.gender = Gender.valueOf(gender.toUpperCase());
+		this.dept_id=dept_id;
 		allEmployee.add(this);
 		
 	}
@@ -94,7 +96,10 @@ public class Employee implements Comparable<Employee>{
 			emp.setGender(Gender.valueOf(gender.toUpperCase()));
 			return this;
 		}
-		
+		public EmployeeBuilder dept_id(int dept_id) {
+    		emp.setDept_id(dept_id);
+    		return this;
+    	}
 		
 	}
 	
@@ -132,6 +137,8 @@ public class Employee implements Comparable<Employee>{
 								.append(experience)
 								.append(" Gender : ")
 								.append(gender)
+								.append(" Department ID :")
+								.append(dept_id)
 								.toString();
 	}
 
@@ -206,6 +213,13 @@ public class Employee implements Comparable<Employee>{
 		public void setGender(Gender gender) {
 			this.gender = gender;
 		}
+		public int getDept_id() {
+			return dept_id;
+		}
+		public void setDept_id(int dept_id) {
+			this.dept_id = dept_id;
+		}
+		
 		
 
 }
