@@ -1,8 +1,8 @@
-package asssignment.service;
+package assignment.services;
 
 import java.util.List;
 
-import assignment.hibernate.Item;
+import assignment.classes.Item;
 
 
 public interface InventorySevice {

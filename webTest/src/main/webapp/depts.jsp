@@ -11,23 +11,23 @@
 <p>Counters: ${counters}</p>
     <p>Current Dept: ${current}</p>
 <form action="depts" method="post">
-        <table >
+        <table border="1">
             <tr>
                 <td>Id</td>
                 <td>
-                    <input type="text" name="id" value="${dept.id}" readonly/>
+                    <input type="text" name="id" value="${dept.id}"/>
                 </td>
             </tr>
             <tr>
                 <td>Name</td>
                 <td>
-                    <input type="text" name="name" value="${dept.name}" required/>
+                    <input type="text" name="name" value="${dept.name}"/>
                 </td>
             </tr>
             <tr>
                 <td>Location</td>
                 <td>
-                    <input type="text" name="location" value="${dept.location}" required/>
+                    <input type="text" name="location" value="${dept.location}"/>
                 </td>
             </tr>
             <tr>
@@ -44,7 +44,7 @@
 
     <hr>
 
-    <h3>Employee List (Sort Options):</h3>
+    <h3>Employee List :</h3>
     <table border="1">
         <tr>
             <th><a href="depts?operation=sortByIdDep">Id</a></th>

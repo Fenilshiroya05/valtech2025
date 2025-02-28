@@ -1,4 +1,4 @@
-package assignment.hibernate;
+package assignment.classes;
 
 import java.util.List;
 

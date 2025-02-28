@@ -1,6 +1,6 @@
-package asssignment.service;
+package assignment.services;
 
-import assignment.hibernate.Item;
+import assignment.classes.Item;
 
 public class InventorySeviceImpl implements InventorySevice {
 
