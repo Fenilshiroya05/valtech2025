@@ -6,61 +6,78 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Order {
 
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "ordid")
-	private int odr_id;
+	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "orderseq")
+	@SequenceGenerator(name = "orderseq",sequenceName = "order_seq",allocationSize = 1)
+	private int id;
 	private String stauts; 
 	
 	@ManyToOne(targetEntity = Customer.class)
+	@JoinColumn(name="customer_id",referencedColumnName = "id")
 	private Customer customer;
-	@OneToMany(targetEntity = LiveItem.class)
-	private List<LiveItem> lineitems;
 	
+	@ManyToMany(targetEntity = Item.class, mappedBy = "orders")
+	@JoinTable(name="order_items",
+	joinColumns = @JoinColumn(name="order_id",referencedColumnName = "id"),
+	inverseJoinColumns = @JoinColumn(name="item_id",referencedColumnName = "id"))
+	private List<Item> items;
 	
-	private Customer cust;
+	@OneToMany(targetEntity = LiveItem.class,mappedBy = "order")
+	private List<LiveItem> liveItems;
 	
-	
-	public Order() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
-	public Order(int odr_id, String stauts, List<LiveItem> lineitems, Customer cust) {
-		super();
-		this.odr_id = odr_id;
+	public Order() {}
+
+	public Order(String stauts) {
 		this.stauts = stauts;
-		this.lineitems = lineitems;
-		this.cust = cust;
 	}
-	public int getOdr_id() {
-		return odr_id;
+
+	public int getId() {
+		return id;
 	}
-	public void setOdr_id(int odr_id) {
-		this.odr_id = odr_id;
+
+	public void setId(int id) {
+		this.id = id;
 	}
+
 	public String getStauts() {
 		return stauts;
 	}
+
 	public void setStauts(String stauts) {
 		this.stauts = stauts;
 	}
-	public List<LiveItem> getLineitem() {
-		return lineitems;
+
+	public Customer getCustomer() {
+		return customer;
 	}
-	public void setLineitem(List<LiveItem> lineitem) {
-		this.lineitems = lineitem;
+
+	public void setCustomer(Customer customer) {
+		this.customer = customer;
 	}
-	public Customer getCust() {
-		return cust;
+
+	public List<Item> getItems() {
+		return items;
 	}
-	public void setCust(Customer cust) {
-		this.cust = cust;
+
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
-	
-	
-	
+
+	public List<LiveItem> getLiveItems() {
+		return liveItems;
+	}
+
+	public void setLiveItems(List<LiveItem> liveItems) {
+		this.liveItems = liveItems;
+	}
+
 }

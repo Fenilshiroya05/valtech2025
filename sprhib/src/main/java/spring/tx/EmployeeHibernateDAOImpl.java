@@ -36,7 +36,6 @@ public class EmployeeHibernateDAOImpl implements EmployeeDAO{
 
 	@Override
 	public List<Employee> getAll() {
-		
 		return new HibernateTemplate(sessionFactory).find("from Employee e");
 	}
 

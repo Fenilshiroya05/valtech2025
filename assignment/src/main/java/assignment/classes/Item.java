@@ -8,69 +8,70 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 
 @Entity
 public class Item {
 	
-	@Id @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "invid")
-	private int inv_id;
+	@Id @GeneratedValue(strategy = GenerationType.IDENTITY,generator = "itemseq")
+	@SequenceGenerator(name = "itemseq",sequenceName = "item_seq",allocationSize = 1)
+	private int id;
 	
-	private String inv_name;
-	private String desc;
+	private String name;
+	private String description;
 	private int qty;
-	private int reorder_qty;
-	private int max_qty;
+	private int reorderQty;
+	private int maxQty;
 	
 	@ManyToMany(targetEntity = Order.class)
 	private List<Order> orders;
 	
-	@OneToOne(targetEntity = LiveItem.class)
-	private List<LiveItem> liveitems;
+	@OneToOne(targetEntity = LiveItem.class,mappedBy = "item")
+	private LiveItem liveItem;
+	
+	
 	
 	public Item() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
-	
-	
 
-	public Item(int inv_id, String inv_name, String desc, int qty, int reorder_qty, int max_qty, List<Order> orders,
-			List<LiveItem> liveitems) {
+	
+	
+	public Item(String name, String description, int qty, int reorderQty, int maxQty) {
 		super();
-		this.inv_id = inv_id;
-		this.inv_name = inv_name;
-		this.desc = desc;
+		this.name = name;
+		this.description = description;
 		this.qty = qty;
-		this.reorder_qty = reorder_qty;
-		this.max_qty = max_qty;
-		this.orders = orders;
-		this.liveitems = liveitems;
+		this.reorderQty = reorderQty;
+		this.maxQty = maxQty;
+		this.liveItem=new LiveItem(this,qty);
 	}
 
 
 
-	public int getInv_id() {
-		return inv_id;
+	public int getId() {
+		return id;
 	}
 
-	public void setInv_id(int inv_id) {
-		this.inv_id = inv_id;
+	public void setId(int id) {
+		this.id = id;
 	}
 
-	public String getInv_name() {
-		return inv_name;
+	public String getName() {
+		return name;
 	}
 
-	public void setInv_name(String inv_name) {
-		this.inv_name = inv_name;
+	public void setName(String name) {
+		this.name = name;
 	}
 
-	public String getDesc() {
-		return desc;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setDesc(String desc) {
-		this.desc = desc;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 	public int getQty() {
@@ -81,20 +82,20 @@ public class Item {
 		this.qty = qty;
 	}
 
-	public int getReorder_qty() {
-		return reorder_qty;
+	public int getReorderQty() {
+		return reorderQty;
 	}
 
-	public void setReorder_qty(int reorder_qty) {
-		this.reorder_qty = reorder_qty;
+	public void setReorderQty(int reorderQty) {
+		this.reorderQty = reorderQty;
 	}
 
-	public int getMax_qty() {
-		return max_qty;
+	public int getMaxQty() {
+		return maxQty;
 	}
 
-	public void setMax_qty(int max_qty) {
-		this.max_qty = max_qty;
+	public void setMaxQty(int maxQty) {
+		this.maxQty = maxQty;
 	}
 
 	public List<Order> getOrders() {
@@ -105,14 +106,13 @@ public class Item {
 		this.orders = orders;
 	}
 
-	public List<LiveItem> getLiveitems() {
-		return liveitems;
+	public LiveItem getLiveItem() {
+		return liveItem;
 	}
 
-	public void setLiveitems(List<LiveItem> liveitems) {
-		this.liveitems = liveitems;
+	public void setLiveItem(LiveItem liveItem) {
+		this.liveItem = liveItem;
 	}
-	
-	
+
 	
 }
