@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
-import assignment.classes.Order;
+import assignment.classes.Orders;
 import assignment.dao.OrderDAO;
 
 public class OrderServiceImpl implements OrderService {
@@ -16,22 +16,22 @@ public class OrderServiceImpl implements OrderService {
 	}
 	
 	@Override
-	public Order getOrder(int id) {
+	public Orders getOrder(int id) {
 		return orderDAO.getOrder(id);
 	}
 
 	@Override
-	public void addOrder(Order order) {
+	public void addOrder(Orders order) {
 		orderDAO.addOrder(order);
 	}
 
 	@Override
-	public List<Order> getAll() {
+	public List<Orders> getAll() {
 		return orderDAO.getAll();
 	}
 
 	@Override
-	public void updateOrder(Order order) {
+	public void updateOrder(Orders order) {
 		orderDAO.updateOrder(order);
 	}
 
@@ -42,10 +42,10 @@ public class OrderServiceImpl implements OrderService {
 	
 	@Override
 	public void statusOfOrder(int id, String status) {
-		Order order=getOrder(id);
+		Orders order=getOrder(id);
 		
 		if(order !=null) {
-			order.setStauts(status);
+			order.setStatus(status);
 			updateOrder(order);
 		}
 	}

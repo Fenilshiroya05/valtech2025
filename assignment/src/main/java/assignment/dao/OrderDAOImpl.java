@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
-import assignment.classes.Order;
+import assignment.classes.Orders;
 
 @Repository
 public class OrderDAOImpl implements OrderDAO {
@@ -22,22 +22,22 @@ public class OrderDAOImpl implements OrderDAO {
 	}
 	
 	@Override
-	public void addOrder(Order order) {
+	public void addOrder(Orders order) {
 		new HibernateTemplate(sessionFactory).save(order);
 	}
 
 	@Override
-	public Order getOrder(int id) {
-		return new HibernateTemplate(sessionFactory).load(Order.class, id);
+	public Orders getOrder(int id) {
+		return new HibernateTemplate(sessionFactory).load(Orders.class, id);
 	}
 
 	@Override
-	public List<Order> getAll() {
-		return new HibernateTemplate(sessionFactory).find("from Order order");
+	public List<Orders> getAll() {
+		return new HibernateTemplate(sessionFactory).find("from Orders order");
 	}
 
 	@Override
-	public void updateOrder(Order order) {
+	public void updateOrder(Orders order) {
 		new HibernateTemplate(sessionFactory).update(order);
 	}
 

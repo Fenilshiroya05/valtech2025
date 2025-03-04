@@ -1,4 +1,4 @@
-package assignment.classes;
+ package assignment.classes;
 
 import java.util.List;
 
@@ -24,12 +24,18 @@ public class Customer {
 	private String addresss;
 	private String permanantAddress;
 	
-	@OneToMany(targetEntity = Order.class,mappedBy = "customer")
-	private List<Order> orders;
+	@OneToMany(targetEntity = Orders.class,mappedBy = "customer")
+	private List<Orders> orders;
 	
 	public Customer() {}
 	
-	
+
+	@Override
+	public String toString() {
+		return "Customer [id=" + id + ", name=" + name + ", age=" + age + ", addresss=" + addresss
+				+ ", permanantAddress=" + permanantAddress + "]";
+	}
+
 
 	public Customer(String name, int age, String addresss, String permanantAddress) {
 		super();
@@ -81,11 +87,11 @@ public class Customer {
 		this.permanantAddress = permanantAddress;
 	}
 
-	public List<Order> getOrders() {
+	public List<Orders> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<Orders> orders) {
 		this.orders = orders;
 	}
 

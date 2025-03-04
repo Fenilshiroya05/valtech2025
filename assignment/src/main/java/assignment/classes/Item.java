@@ -23,8 +23,8 @@ public class Item {
 	private int reorderQty;
 	private int maxQty;
 	
-	@ManyToMany(targetEntity = Order.class)
-	private List<Order> orders;
+	@ManyToMany(targetEntity = Orders.class)
+	private List<Orders> orders;
 	
 	@OneToOne(targetEntity = LiveItem.class,mappedBy = "item")
 	private LiveItem liveItem;
@@ -98,11 +98,11 @@ public class Item {
 		this.maxQty = maxQty;
 	}
 
-	public List<Order> getOrders() {
+	public List<Orders> getOrders() {
 		return orders;
 	}
 
-	public void setOrders(List<Order> orders) {
+	public void setOrders(List<Orders> orders) {
 		this.orders = orders;
 	}
 
@@ -112,6 +112,14 @@ public class Item {
 
 	public void setLiveItem(LiveItem liveItem) {
 		this.liveItem = liveItem;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Item [id=" + id + ", name=" + name + ", description=" + description + ", qty=" + qty + ", reorderQty="
+				+ reorderQty + ", maxQty=" + maxQty + "]";
 	}
 
 	

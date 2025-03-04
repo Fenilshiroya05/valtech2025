@@ -22,9 +22,9 @@ public class LiveItem {
 	@JoinColumn(name =  "item_id")
 	private Item item;
 	
-	@ManyToOne(targetEntity = Order.class)
+	@ManyToOne(targetEntity = Orders.class)
 	@JoinColumn(name="order_id",referencedColumnName = "id")
-	private Order order;
+	private Orders order;
 	
 	public LiveItem() {}
 	
@@ -61,11 +61,17 @@ public class LiveItem {
 		this.item = item;
 	}
 	
-	public Order getOrder() {
+	public Orders getOrder() {
 		return order;
 	}
-	public void setOrder(Order order) {
+	public void setOrder(Orders order) {
 		this.order = order;
+	}
+
+
+	@Override
+	public String toString() {
+		return "LiveItem [id=" + id + ", qty=" + qty + "]";
 	}
 	
 }

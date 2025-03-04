@@ -2,6 +2,7 @@ package assignment.classes;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,16 +13,18 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
 
 @Entity
-public class Order {
+@Table(name = "orders")
+public class Orders {
 
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "orderseq")
 	@SequenceGenerator(name = "orderseq",sequenceName = "order_seq",allocationSize = 1)
 	private int id;
-	private String stauts; 
+	private String status; 
 	
-	@ManyToOne(targetEntity = Customer.class)
+	@ManyToOne(targetEntity = Customer.class,cascade = CascadeType.ALL)
 	@JoinColumn(name="customer_id",referencedColumnName = "id")
 	private Customer customer;
 	
@@ -34,11 +37,16 @@ public class Order {
 	@OneToMany(targetEntity = LiveItem.class,mappedBy = "order")
 	private List<LiveItem> liveItems;
 	
-	public Order() {}
+	public Orders() {}
 
-	public Order(String stauts) {
-		this.stauts = stauts;
+	
+
+	public Orders(String status) {
+		super();
+		this.status = status;
 	}
+
+
 
 	public int getId() {
 		return id;
@@ -48,13 +56,19 @@ public class Order {
 		this.id = id;
 	}
 
-	public String getStauts() {
-		return stauts;
+	
+
+	public String getStatus() {
+		return status;
 	}
 
-	public void setStauts(String stauts) {
-		this.stauts = stauts;
+
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
+
+
 
 	public Customer getCustomer() {
 		return customer;
@@ -80,4 +94,10 @@ public class Order {
 		this.liveItems = liveItems;
 	}
 
+	@Override
+	public String toString() {
+		return "Order [id=" + id + ", status=" + status + ", customer=" + customer + "]";
+	}
+
+	
 }

@@ -2,13 +2,13 @@ package assignment.dao;
 
 import java.util.List;
 
-import assignment.classes.Order;
+import assignment.classes.Orders;
 
 public interface OrderDAO {
 
-	void addOrder(Order order);
-	Order getOrder(int id);
-	List<Order> getAll();
-	void updateOrder(Order order);
+	void addOrder(Orders order);
+	Orders getOrder(int id);
+	List<Orders> getAll();
+	void updateOrder(Orders order);
 	void deleteOrder(int id);
 }
