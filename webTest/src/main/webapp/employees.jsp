@@ -1,4 +1,4 @@
-<%@page import="dao.Employee"%>
+<%@page import="classes.Employee"%>
 <%@page import="java.util.List"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
@@ -10,7 +10,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<table>
+<table border="1">
 <form action ="employees" method ="get">
 
 		<input type="hidden" name="operation" value="search">
@@ -69,7 +69,7 @@
 </tr>
 </table>
 <hr></hr>
-<table>
+<%-- <table>
 <tr>
 	<th>Id</th>
 	<th>Name</th>
@@ -117,7 +117,7 @@ if(emps!= null){
 	<%} %>
 
 
-</table>
+</table> --%>
 </form>
 </body>
 </html>

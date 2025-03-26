@@ -9,9 +9,9 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import assignment.classes.Customer;
 import assignment.classes.Item;
-import assignment.classes.LiveItem;
+import assignment.classes.LineItem;
 import assignment.classes.Orders;
-import assignment.dao.LiveItemDAO;
+import assignment.dao.LineItemDAO;
 import assignment.dao.OrderDAO;
 import assignment.services.CustomerService;
 import assignment.services.InventoryService;
@@ -27,11 +27,11 @@ public class HibernateClient {
 		CustomerService cs=ctx.getBean(CustomerService.class);
 		InventoryService is=ctx.getBean(InventoryService.class);
 		OrderService os=ctx.getBean(OrderService.class);
-		LiveItemDAO lDAO=ctx.getBean(LiveItemDAO.class);
+		LineItemDAO lDAO=ctx.getBean(LineItemDAO.class);
 		
 
 	
-//		Customer c1= new Customer("FENIL",21,"AHM","SRT");
+	//	Customer c1= new Customer("FENIL",21,"AHM","SRT");
 //		Customer c2= new Customer("RAJ",21,"RJT","AHM");
 //		Customer c3= new Customer("KRISHNA",21,"VDA","DIU");
 //		Customer c4= new Customer("SHIV",21,"AMR","HMT");
@@ -55,8 +55,8 @@ public class HibernateClient {
 //        System.out.println("Updated Customer: " + updatedCustomer.getName());
 	
 		Item i1=new Item("LAPTOP","XZT",10,4,15);
-//		Item i2=new Item("PC","i5",6,2,10);
-		Item i3=new Item("MOUSE","WIRELESS",5,2,8);
+		Item i2=new Item("PC","i5",6,2,10);
+		//Item i3=new Item("MOUSE","WIRELESS",5,2,8);
 //		Item i4=new Item("KEYBOARD","WIRED",5,2,6);
 //
 //		is.addInventory(i1);
@@ -66,6 +66,13 @@ public class HibernateClient {
 		
         System.out.println("All Items: " + is.getAll());
 		
+//		Customer c6= new Customer("FENIL",21,"AHM","SRT");
+//		cs.addCustomer(c6);
+        
+       // Orders order = new Orders();
+       // os.placeOrder(order, Arrays.asList(i1.getId(), i2.getId()), c6.getId());
+
+        
 //          Orders order = new Orders("PENDING");
 //          order.setCustomer(c5);
 //          os.addOrder(order);
@@ -85,13 +92,13 @@ public class HibernateClient {
 //        Item i5=new Item("BISCUIT","CREAM",3,2,6);
 //        is.addInventory(i5);
         
-//		LiveItem l1= new LiveItem(i5,2);
+//		LineItem l1= new LineItem(i5,2);
 //		lDAO.addLiveItem(l1);
 //		
-	    System.out.println("All Live Items: " + lDAO.getAll());
+	    System.out.println("All Line Items: " + lDAO.getAll());
 
-//	    lDAO.deleteLiveItem(l1.getId());
-//        System.out.println("Deleted Live Item with ID: " + l1.getId());
+//	    lDAO.deleteLineItem(l1.getId());
+//        System.out.println("Deleted Line Item with ID: " + l1.getId());
 
 //		Item i5=new Item("MOUSE","WIRELESS",5,2,8);
 //		is.addInventory(i5);//same qty because 5>2 (qty>reorderqty)
@@ -103,8 +110,7 @@ public class HibernateClient {
 //	    is.reorderItem(i6.getId());
 //        Item reorderedItem = is.getInventory(i6.getId());
 //        System.out.println("Reordered Item: " + reorderedItem.getName() + ", New Quantity: " + reorderedItem.getQty());
-
-        
+	    
         System.out.println("All Items: " + is.getAll());
 		
 		ctx.close();

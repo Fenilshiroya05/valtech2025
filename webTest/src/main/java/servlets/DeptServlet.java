@@ -4,11 +4,12 @@ package servlets;
 import java.io.IOException;
 import java.util.List;
 
-import dao.Employee;
+import classes.Dept;
+import classes.Employee;
+import dao.DeptDAO;
+import dao.DeptDAOImpl;
 import dao.EmployeeDAO;
 import dao.EmployeeDAOImpl;
-import dao.EmployeeServicesImpl;
-import dao.EmployeeSevices;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,6 +18,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import services.EmployeeServicesImpl;
+import services.EmployeeSevices;
 
 @WebServlet(urlPatterns="/depts")
 public class DeptServlet extends HttpServlet {
@@ -50,9 +53,7 @@ public class DeptServlet extends HttpServlet {
 		}
 
         session.setAttribute("current", current);
-        
-        session.setAttribute("emps", deptDAO.getEmployeesByDeptId(current.getId())); // Add the employee list to the session
-        
+        session.setAttribute("emps", deptDAO.getEmployeesByDeptId(current.getId())); // Add the employee list to the session 
         req.setAttribute("dept", current);
 
         if ("Cancel".equals(operation)) {

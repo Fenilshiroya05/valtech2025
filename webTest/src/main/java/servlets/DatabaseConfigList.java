@@ -3,13 +3,15 @@ package servlets;
 import java.io.InputStream;
 import java.util.Properties;
 
+import dao.DeptDAO;
+import dao.DeptDAOImpl;
 import dao.EmployeeDAO;
 import dao.EmployeeDAOImpl;
-import dao.EmployeeServicesImpl;
-import dao.EmployeeSevices;
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
+import services.EmployeeServicesImpl;
+import services.EmployeeSevices;
 
 public class DatabaseConfigList implements ServletContextListener {
 	EmployeeDAO empdao;

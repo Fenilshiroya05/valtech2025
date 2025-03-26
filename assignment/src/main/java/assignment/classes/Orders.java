@@ -1,5 +1,6 @@
 package assignment.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
+
 
 @Entity
 @Table(name = "orders")
@@ -34,19 +36,27 @@ public class Orders {
 	inverseJoinColumns = @JoinColumn(name="item_id",referencedColumnName = "id"))
 	private List<Item> items;
 	
-	@OneToMany(targetEntity = LiveItem.class,mappedBy = "order")
-	private List<LiveItem> liveItems;
+	@OneToMany(targetEntity = LineItem.class,mappedBy = "order")
+	private List<LineItem> liveItems;
 	
 	public Orders() {}
 
 	
+	public void removeLiveItem(LineItem l) {
+		l.setOrder(null);
+		liveItems.remove(l);
+	}
+	
+	public void addLiveItem(LineItem l) {
+		if(liveItems==null) liveItems = new ArrayList<LineItem>();
+		liveItems.add(l);
+		l.setOrder(this);
+	}
 
 	public Orders(String status) {
 		super();
 		this.status = status;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -56,19 +66,13 @@ public class Orders {
 		this.id = id;
 	}
 
-	
-
 	public String getStatus() {
 		return status;
 	}
 
-
-
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-
 
 	public Customer getCustomer() {
 		return customer;
@@ -86,11 +90,11 @@ public class Orders {
 		this.items = items;
 	}
 
-	public List<LiveItem> getLiveItems() {
+	public List<LineItem> getLiveItems() {
 		return liveItems;
 	}
 
-	public void setLiveItems(List<LiveItem> liveItems) {
+	public void setLiveItems(List<LineItem> liveItems) {
 		this.liveItems = liveItems;
 	}
 

@@ -4,7 +4,13 @@ import java.util.List;
 
 import org.springframework.orm.hibernate3.HibernateTemplate;
 
+import assignment.classes.Customer;
+import assignment.classes.Item;
+import assignment.classes.LineItem;
 import assignment.classes.Orders;
+import assignment.dao.CustomerDAO;
+import assignment.dao.InventoryDAO;
+import assignment.dao.LineItemDAO;
 import assignment.dao.OrderDAO;
 
 public class OrderServiceImpl implements OrderService {
@@ -49,5 +55,29 @@ public class OrderServiceImpl implements OrderService {
 			updateOrder(order);
 		}
 	}
+	
+	
+	
+//	@Override
+//    public void placeOrder(Orders order, List<Integer> itemIds, int customerId) {
+//        Customer customer = customerDAO.getCustomer(customerId);
+//        if (customer != null) {
+//            order.setCustomer(customer);
+//            order.setStatus("PENDING");
+//            addOrder(order);
+//
+//            for (int itemId : itemIds) {
+//            	
+//                Item item = inventoryDAO.getInventory(itemId);
+//                if (item != null) {
+//                    order.getItems().add(item);
+//                    LiveItem liveItem = new LiveItem(item, item.getQty());
+//                    liveItem.setOrder(order);
+//                    liveItemDAO.addLiveItem(liveItem);
+//                }
+//            }
+//            updateOrder(order);
+//        }
+//    }
 
 }

@@ -1,0 +1,16 @@
+server:
+  port: 9050
+ 
+spring:
+  application:
+    name: SPRING-WEB-ASSIGNMENT
+  
+  datasource:
+    url: jdbc:postgresql://localhost:5432/assignmentmvc
+    username: postgres
+    password: postgres
+  
+  jpa:
+    show-sql: true
+    hibernate: 
+      ddl-auto: update

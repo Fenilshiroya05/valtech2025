@@ -12,4 +12,5 @@ public interface OrderService {
 	List<Orders> getAll();
 	void updateOrder(Orders order);
 	void deleteOrder(int id);
+	//void placeOrder(Orders order, List<Integer> itemIds, int customerId);
 }

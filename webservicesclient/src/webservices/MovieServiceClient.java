@@ -15,7 +15,6 @@ public class MovieServiceClient {
 		System.out.println(ms.getMovie(5));
 		ms.addMovie(new Movie(6,"Mission Impossible","English","Action",List.of("Tom Cruise")));
 		System.out.println(ms.getAllMovies());
-
 	}
 	
 

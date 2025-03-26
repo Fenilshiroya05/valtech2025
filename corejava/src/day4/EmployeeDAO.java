@@ -2,7 +2,7 @@ package day4;
 
 import java.util.List;
 
-import Assignment.Employee;
+import assignment.Employee;
 
 public interface EmployeeDAO {
 	

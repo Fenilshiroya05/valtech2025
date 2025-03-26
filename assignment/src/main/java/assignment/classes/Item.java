@@ -26,15 +26,12 @@ public class Item {
 	@ManyToMany(targetEntity = Orders.class)
 	private List<Orders> orders;
 	
-	@OneToOne(targetEntity = LiveItem.class,mappedBy = "item")
-	private LiveItem liveItem;
+	@OneToOne(targetEntity = LineItem.class,mappedBy = "item")
+	private LineItem liveItem;
 	
 	
 	
-	public Item() {
-		super();
-		// TODO Auto-generated constructor stub
-	}
+	public Item() {}
 
 	
 	
@@ -45,7 +42,7 @@ public class Item {
 		this.qty = qty;
 		this.reorderQty = reorderQty;
 		this.maxQty = maxQty;
-		this.liveItem=new LiveItem(this,qty);
+		this.liveItem=new LineItem(this,qty);
 	}
 
 
@@ -106,11 +103,11 @@ public class Item {
 		this.orders = orders;
 	}
 
-	public LiveItem getLiveItem() {
+	public LineItem getLiveItem() {
 		return liveItem;
 	}
 
-	public void setLiveItem(LiveItem liveItem) {
+	public void setLiveItem(LineItem liveItem) {
 		this.liveItem = liveItem;
 	}
 

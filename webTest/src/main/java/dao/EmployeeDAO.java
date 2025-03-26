@@ -2,7 +2,8 @@ package dao;
 
 import java.util.List;
 
-import dao.Employee.Gender;
+import classes.Employee;
+import classes.Employee.Gender;
 
 
 public interface EmployeeDAO {

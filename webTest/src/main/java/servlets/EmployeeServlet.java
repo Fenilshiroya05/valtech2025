@@ -4,11 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import dao.Employee;
+import classes.Employee;
 import dao.EmployeeDAO;
 import dao.EmployeeDAOImpl;
-import dao.EmployeeServicesImpl;
-import dao.EmployeeSevices;
 import jakarta.servlet.ServletConfig;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -16,6 +14,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import services.EmployeeServicesImpl;
+import services.EmployeeSevices;
 
 @WebServlet(urlPatterns = "/employees")
 public class EmployeeServlet extends HttpServlet{
@@ -58,8 +58,6 @@ public class EmployeeServlet extends HttpServlet{
 			req.getRequestDispatcher("employees.jsp").forward(req, resp);
 			return;
 		}
-		
-		
 
 		if("sortByName".equals(operation)) {
 			List<Employee> emp = dao.getAll();

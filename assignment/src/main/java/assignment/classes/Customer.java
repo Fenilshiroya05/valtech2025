@@ -1,5 +1,6 @@
  package assignment.classes;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -13,7 +14,7 @@ import javax.persistence.Table;
 
 
 @Entity
-@Table(name="customer1")
+@Table(name="customers")
 public class Customer {
 
 	@Id @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "custseq")
@@ -45,7 +46,17 @@ public class Customer {
 		this.permanantAddress = permanantAddress;
 	}
 
-
+	public void removeOrder(Orders o) {
+		o.setCustomer(null);
+		orders.remove(o);
+	}
+	
+	public void addOrder(Orders o) {
+		if(orders==null) orders = new ArrayList<Orders>();
+		orders.add(o);
+		o.setCustomer(this);
+	}
+	
 
 	public int getId() {
 		return id;

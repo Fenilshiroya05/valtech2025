@@ -9,13 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
-import dao.Employee.Gender;
+import classes.Employee;
+import classes.Employee.Gender;
 import jakarta.servlet.ServletContext;
 
-//ximport org.postgresql.shaded.com.ongres.scram.common.bouncycastle.pbkdf2.RuntimeCryptoException;
-
-//import Assignment.Employee;
-//import Assignment.Employee.Gender;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 	//constructor for class
@@ -47,7 +44,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 //		}	
 //	
 //	}
-	
+	//pass url,pass and username
 	private Connection getConnection() throws SQLException{
 		
 		//System.out.println(sc.getAttribute("db.password"));
@@ -61,8 +58,16 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 //				("jdbc:postgresql://localhost:5432/training","postgres","postgres") ;
 		
 	}
-
-	//public EmployeeDAOImpl() {}
+	
+	private void setValuesToPreparedStatement(Employee e, PreparedStatement ps) throws SQLException {
+		ps.setString(1, e.getName());
+		ps.setInt(2, e.getAge());
+		ps.setString(3, e.getGender().name());
+		ps.setDouble(4, e.getSalary());
+		ps.setInt(5, e.getExperience());
+		ps.setInt(6, e.getLevel());
+		ps.setLong(7,e.getId());
+	}
 
 	@Override
 	public void save(Employee e) {
@@ -76,16 +81,6 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		}catch (Exception e2) {
 			throw new RuntimeException(e2);
 		}
-	}
-
-	private void setValuesToPreparedStatement(Employee e, PreparedStatement ps) throws SQLException {
-		ps.setString(1, e.getName());
-		ps.setInt(2, e.getAge());
-		ps.setString(3, e.getGender().name());
-		ps.setDouble(4, e.getSalary());
-		ps.setInt(5, e.getExperience());
-		ps.setInt(6, e.getLevel());
-		ps.setLong(7,e.getId());
 	}
 
 	@Override
@@ -162,16 +157,9 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
-		return emp;
-		
+		return emp;	
 	}
 	
-	
-
-	public static void main(String[] args) {
-		
-	}
-
 	@Override
 	public List<Employee> searchByName(String name) {
 		List<Employee> emp = new ArrayList<Employee>();
@@ -192,57 +180,7 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return null;
 	}
 
-//	@Override
-//	public List<Employee> findSalaryGreater() {
-//		List<Employee> emp = new ArrayList<Employee>();
-//		String sql = "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE SALARY > 15000";
-//		try(Connection conn = getConnection()){
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ResultSet rs=ps.executeQuery();
-//			while(rs.next()) {
-//				emp.add(populateEmployee(rs));
-//				return emp;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Employee> findSalaryLess() {
-//		List<Employee> emp = new ArrayList<Employee>();
-//		String sql = "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE SALARY < 15000";
-//		try(Connection conn = getConnection()){
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ResultSet rs=ps.executeQuery();
-//			while(rs.next()) {
-//				emp.add(populateEmployee(rs));
-//				return emp;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//
-//	@Override
-//	public List<Employee> findSalaryEqual() {
-//		List<Employee> emp = new ArrayList<Employee>();
-//		String sql = "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE SALARY = 15000";
-//		try(Connection conn = getConnection()){
-//			PreparedStatement ps = conn.prepareStatement(sql);
-//			ResultSet rs=ps.executeQuery();
-//			while(rs.next()) {
-//				emp.add(populateEmployee(rs));
-//				return emp;
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-
+	
 	@Override
 	public List<Employee> searchByAge(int age) {
 		List<Employee> emp = new ArrayList<Employee>();
@@ -375,5 +313,59 @@ public class EmployeeDAOImpl implements EmployeeDAO {
 		return null;
 	}
 
+	
+	
+//	@Override
+//	public List<Employee> findSalaryGreater() {
+//		List<Employee> emp = new ArrayList<Employee>();
+//		String sql = "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE SALARY > 15000";
+//		try(Connection conn = getConnection()){
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			ResultSet rs=ps.executeQuery();
+//			while(rs.next()) {
+//				emp.add(populateEmployee(rs));
+//				return emp;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Employee> findSalaryLess() {
+//		List<Employee> emp = new ArrayList<Employee>();
+//		String sql = "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE SALARY < 15000";
+//		try(Connection conn = getConnection()){
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			ResultSet rs=ps.executeQuery();
+//			while(rs.next()) {
+//				emp.add(populateEmployee(rs));
+//				return emp;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+//
+//	@Override
+//	public List<Employee> findSalaryEqual() {
+//		List<Employee> emp = new ArrayList<Employee>();
+//		String sql = "SELECT ID,NAME,AGE,GENDER,SALARY,EXPERIANCE,LEVEL FROM EMPLOYEE WHERE SALARY = 15000";
+//		try(Connection conn = getConnection()){
+//			PreparedStatement ps = conn.prepareStatement(sql);
+//			ResultSet rs=ps.executeQuery();
+//			while(rs.next()) {
+//				emp.add(populateEmployee(rs));
+//				return emp;
+//			}
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
+
+	
 	
 }

@@ -10,8 +10,8 @@ import java.util.List;
 
 import org.postgresql.shaded.com.ongres.scram.common.bouncycastle.pbkdf2.RuntimeCryptoException;
 
-import Assignment.Employee;
-import Assignment.Employee.Gender;
+import assignment.Employee;
+import assignment.Employee.Gender;
 
 public class EmployeeDAOImpl implements EmployeeDAO {
 	//constructor for class
