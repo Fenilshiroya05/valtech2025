@@ -16,6 +16,9 @@ import assignment.dao.OrderDAO;
 public class OrderServiceImpl implements OrderService {
 
 	private OrderDAO orderDAO;
+	private CustomerDAO customerDAO;
+	private InventoryDAO inventoryDAO;
+	private LineItemDAO lineItemDAO;
 	
 	public void setOrderDAO(OrderDAO orderDAO) {
 		this.orderDAO = orderDAO;
@@ -71,9 +74,9 @@ public class OrderServiceImpl implements OrderService {
 //                Item item = inventoryDAO.getInventory(itemId);
 //                if (item != null) {
 //                    order.getItems().add(item);
-//                    LiveItem liveItem = new LiveItem(item, item.getQty());
-//                    liveItem.setOrder(order);
-//                    liveItemDAO.addLiveItem(liveItem);
+//                    LineItem lineItem = new LineItem(item, item.getQty());
+//                    lineItem.setOrder(order);
+//                    lineItemDAO.addLiveItem(lineItem);
 //                }
 //            }
 //            updateOrder(order);

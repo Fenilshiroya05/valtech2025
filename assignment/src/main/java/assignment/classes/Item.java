@@ -3,10 +3,12 @@ package assignment.classes;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
 
@@ -23,11 +25,8 @@ public class Item {
 	private int reorderQty;
 	private int maxQty;
 	
-	@ManyToMany(targetEntity = Orders.class)
-	private List<Orders> orders;
-	
-	@OneToOne(targetEntity = LineItem.class,mappedBy = "item")
-	private LineItem liveItem;
+	@OneToMany(mappedBy="item",fetch = FetchType.EAGER)
+	private List<LineItem>lineItems;
 	
 	
 	
@@ -42,7 +41,6 @@ public class Item {
 		this.qty = qty;
 		this.reorderQty = reorderQty;
 		this.maxQty = maxQty;
-		this.liveItem=new LineItem(this,qty);
 	}
 
 
@@ -93,22 +91,6 @@ public class Item {
 
 	public void setMaxQty(int maxQty) {
 		this.maxQty = maxQty;
-	}
-
-	public List<Orders> getOrders() {
-		return orders;
-	}
-
-	public void setOrders(List<Orders> orders) {
-		this.orders = orders;
-	}
-
-	public LineItem getLiveItem() {
-		return liveItem;
-	}
-
-	public void setLiveItem(LineItem liveItem) {
-		this.liveItem = liveItem;
 	}
 
 

@@ -30,9 +30,7 @@ class HibernateTest {
 		
 		Item i1= new Item("BISCUIT","XYZ", 2, 1, 4);
 		is.addInventory(i1);
-		
-		LineItem l1= new LineItem(i1, 1);
-		lDAO.addLineItem(l1);
+	
 		
 		Orders o= new Orders();
 		o.setStatus("PENDING");

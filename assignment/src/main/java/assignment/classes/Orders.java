@@ -30,28 +30,10 @@ public class Orders {
 	@JoinColumn(name="customer_id",referencedColumnName = "id")
 	private Customer customer;
 	
-	@ManyToMany(targetEntity = Item.class, mappedBy = "orders")
-	@JoinTable(name="order_items",
-	joinColumns = @JoinColumn(name="order_id",referencedColumnName = "id"),
-	inverseJoinColumns = @JoinColumn(name="item_id",referencedColumnName = "id"))
-	private List<Item> items;
-	
 	@OneToMany(targetEntity = LineItem.class,mappedBy = "order")
 	private List<LineItem> liveItems;
 	
 	public Orders() {}
-
-	
-	public void removeLiveItem(LineItem l) {
-		l.setOrder(null);
-		liveItems.remove(l);
-	}
-	
-	public void addLiveItem(LineItem l) {
-		if(liveItems==null) liveItems = new ArrayList<LineItem>();
-		liveItems.add(l);
-		l.setOrder(this);
-	}
 
 	public Orders(String status) {
 		super();
@@ -80,14 +62,6 @@ public class Orders {
 
 	public void setCustomer(Customer customer) {
 		this.customer = customer;
-	}
-
-	public List<Item> getItems() {
-		return items;
-	}
-
-	public void setItems(List<Item> items) {
-		this.items = items;
 	}
 
 	public List<LineItem> getLiveItems() {

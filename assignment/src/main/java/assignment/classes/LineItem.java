@@ -21,19 +21,10 @@ public class LineItem {
 	private int id;
 	private int qty;
 	
-	@OneToOne(targetEntity = Item.class)
-	@JoinColumn(name =  "item_id")
-	private Item item;
-	
-	@ManyToOne(targetEntity = Orders.class)
-	@JoinColumn(name="order_id",referencedColumnName = "id")
-	private Orders order;
-	
 	public LineItem() {}
 		
 	
-	public LineItem(Item item, int qty) {
-		this.item=item;
+	public LineItem( int qty) {
 		this.qty=qty;
 	}
 
@@ -53,20 +44,6 @@ public class LineItem {
 		this.id = id;
 	}
 
-	public Item getItem() {
-		return item;
-	}
-
-	public void setItem(Item item) {
-		this.item = item;
-	}
-	
-	public Orders getOrder() {
-		return order;
-	}
-	public void setOrder(Orders order) {
-		this.order = order;
-	}
 	@Override
 	public String toString() {
 		return "LiveItem [id=" + id + ", qty=" + qty + "]";
