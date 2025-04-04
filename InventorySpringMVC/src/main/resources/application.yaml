@@ -1,0 +1,17 @@
+spring:
+  application:
+    name: SPRING_WEB
+  datasource:
+    driver-class:  org.postgresql.Driver
+    url:  jdbc:postgresql://localhost:5432/OrderManagementSystem
+    username:  postgres
+    password:  postgres
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show_sql:  true
+
+  mvc:
+   view:
+     prefix:  /WEB-INF/jsps/
+     suffix: .jsp
