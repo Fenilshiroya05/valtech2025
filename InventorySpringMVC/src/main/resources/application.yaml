@@ -3,7 +3,7 @@ spring:
     name: SPRING_WEB
   datasource:
     driver-class:  org.postgresql.Driver
-    url:  jdbc:postgresql://localhost:5432/OrderManagementSystem
+    url:  jdbc:postgresql://localhost:5432/OrderManagementMVC
     username:  postgres
     password:  postgres
   jpa:
